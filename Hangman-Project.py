@@ -5,14 +5,12 @@ import sys
 myWordList = ["mathematics", "computers", "rhythm", "games", "sleep"]
 
 guessList = []
-
+Mistakes = []
 myWord = random.choice(myWordList)
 MissCount = 0 
-count = 0
-GuessNumber = input("How many lives would you like to have? (Each missed letter loses a life) Pick between 1 and 9 ")
-
-
-
+Successes = 0
+GuessNumber = input("How many lives would you like to have? (Each missed letter loses a life) Pick between 1 and 9: ")
+Win = list(myWord)
 
 for letter in myWord:
 	guessList.append("_")
@@ -22,7 +20,7 @@ if int(GuessNumber) >= 10:
 elif int(GuessNumber) == 0:
 	sys.exit("I guess you lost then")
 while int(MissCount) <= int(GuessNumber):
-
+	count = 0
 	choice = input("Enter a letter: ")
 
 	if choice in myWord:
@@ -30,16 +28,24 @@ while int(MissCount) <= int(GuessNumber):
 		for letter in myWord: 
 			if letter == choice:
 				guessList[count] = choice
-			count = count + 1
+			count += 1
+			Successes += 1
 		print(guessList)
+		print(Mistakes)
 	else:
 		print("Not a match")
+		Mistakes.append(choice)
 		MissCount = MissCount + 1
 		Attempts = int(GuessNumber) - MissCount
 		print("You have " + str(Attempts) + " remaining attempts left." )
 		print(guessList)
+		print("You guessed:" + str(Mistakes))
 	if MissCount == int(GuessNumber):
 		print("You lose. Game Over.")
+		break
+	if guessList == Win:
+		print("yOu'rE wiNNeR")
+		print("You have solved the word, nice job!")
 		break
 # myList = list(myWord)
 	#for letter in myWord:
